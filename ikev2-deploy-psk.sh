@@ -56,7 +56,7 @@ conn ikev2-vpn
     right=%any
     rightid=%any
     rightdns=8.8.8.8,8.8.4.4
-    rightsubnet=172.30.0.0/16
+    rightsubnet=172.30.0.0/16,172.21.0.0/16,<IKS Worker nodes private subnet>
     authby=psk
 EOF
 
