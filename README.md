@@ -18,7 +18,10 @@ This script would uuidgen a PSK and print it out to console, where you can copy 
 
 After you `ssh your_vpn_machine`, just run this: 
 ```
-curl -L https://raw.githubusercontent.com/ahmadsayed/ikev2_vpn/master/ikev2-deploy-psk.sh -o ~/deploy.sh && chmod +x ~/deploy.sh && ~/deploy.sh
+curl -L https://raw.githubusercontent.com/ahmadsayed/ikev2_vpn/master/ikev2-deploy-psk.sh -o ~/deploy.sh 
+
+#Edit the deploy.sh and update leftsubnet, with softlayer private subnet
+chmod +x ~/deploy.sh && ~/deploy.sh
 ```
 ---
 ### Deploy Strongswan on IBM Cloud kubernetes Service
