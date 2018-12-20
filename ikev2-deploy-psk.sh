@@ -30,6 +30,7 @@ apt-get -y install strongswan strongswan-plugin-eap-mschapv2 moreutils iptables-
 #===========
 
 ## Create /etc/ipsec.conf
+## change right sourceIP address to match subnet
 
 cat << EOF > /etc/ipsec.conf
 config setup
@@ -54,7 +55,7 @@ conn ikev2-vpn
     right=%any
     rightid=%any
     rightdns=8.8.8.8,8.8.4.4
-    rightsourceip=10.10.10.0/24
+    rightsourceip=10.68.233.0/26
     authby=secret
 EOF
 
@@ -115,8 +116,14 @@ echo "" >> /etc/sysctl.conf
 echo "" >> /etc/sysctl.conf
 echo "net.ipv4.ip_no_pmtu_disc = 1" >> /etc/sysctl.conf
 
+#========
+# Flush iptables for testing purpose
+#========
+iptables -F
+
+
 #=======
 # REBOOT
 #=======
 
-reboot
+#reboot
