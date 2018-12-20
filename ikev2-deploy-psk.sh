@@ -44,19 +44,20 @@ conn ikev2-vpn
     keyexchange=ikev2
     fragmentation=yes
     forceencaps=yes
-    ike=aes256-sha1-modp1024,3des-sha1-modp1024!,aes256-sha2_256
-    esp=aes256-sha1,3des-sha1!
+    ike=aes128-sha1-modp2048,3des-sha1-modp1536
+    esp=aes128-sha1,3des-sha1
     dpdaction=clear
     dpddelay=300s
     rekey=no
     left=%any
-    leftid=%any
-    leftsubnet=0.0.0.0/0
+    leftid=on-prem
+    leftsubnet=10.68.233.0/26
+    leftsourceip=%config
     right=%any
     rightid=%any
     rightdns=8.8.8.8,8.8.4.4
-    rightsourceip=10.68.233.0/26
-    authby=secret
+    rightsubnet=172.30.0.0/16
+    authby=psk
 EOF
 
 sed -i "s/@server_name_or_ip/${IP}/g" /etc/ipsec.conf
@@ -85,6 +86,12 @@ iptables -Z
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
+iptables -A INPUT -p icmp --icmp-type 8 -s 0/0 -d 0/0 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -p icmp --icmp-type 0 -s 0/0 -d 0/0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A OUTPUT -p icmp --icmp-type 8 -s 0/0 -d 0/0 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type 0 -s 0/0 -d 0/0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
 # loopback 
 iptables -A INPUT -i lo -j ACCEPT
 
@@ -93,11 +100,11 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -p udp --dport  500 -j ACCEPT
 iptables -A INPUT -p udp --dport 4500 -j ACCEPT
 
-iptables -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s 10.10.10.10/24 -j ACCEPT
-iptables -A FORWARD --match policy --pol ipsec --dir out --proto esp -d 10.10.10.10/24 -j ACCEPT
-iptables -t nat -A POSTROUTING -s 10.10.10.10/24 -o eth0 -m policy --pol ipsec --dir out -j ACCEPT
-iptables -t nat -A POSTROUTING -s 10.10.10.10/24 -o eth0 -j MASQUERADE
-iptables -t mangle -A FORWARD --match policy --pol ipsec --dir in -s 10.10.10.10/24 -o eth0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
+iptables -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s 10.68.233.0/26 -j ACCEPT
+iptables -A FORWARD --match policy --pol ipsec --dir out --proto esp -d 10.68.233.0/26 -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.68.233.0/26 -o eth1 -m policy --pol ipsec --dir out -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.68.233.0/26 -o eth1 -j MASQUERADE
+iptables -t mangle -A FORWARD --match policy --pol ipsec --dir in -s 10.68.233.0/26 -o eth1 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
 
 iptables -A INPUT -j DROP
 iptables -A FORWARD -j DROP
