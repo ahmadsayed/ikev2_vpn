@@ -8,7 +8,7 @@ These scripts are based on this cool tutorial article: https://www.digitalocean.
 This Readme edited from the original fork to work with IBM cloud kubentes cluser IBM Cloud softlayer machine
 
 
-### This about following the pattern mentioned  below 
+### Following the pattern mentioned  below 
 https://developer.ibm.com/dwblog/2018/securing-containers-iks-kubernetes/
 
 ![alt IPSEC with strongswan](https://developer.ibm.com/dwblog/wp-content/uploads/sites/73/ContainersWorkloadPattern-6.png)
