@@ -45,3 +45,26 @@ helm install -f config.yaml --name=vpn ibm/strongswan
 For detailes steps and trouble shooting follow the below URL
 https://console.bluemix.net/docs/containers/cs_vpn.html#vpn
 
+To validate if everything went right 
+
+```
+helm test vpn
+```
+Expected result should be 
+
+```
+RUNNING: vpn-strongswan-check-state
+PASSED: vpn-strongswan-check-state
+RUNNING: vpn-strongswan-check-config
+PASSED: vpn-strongswan-check-config
+RUNNING: vpn-strongswan-ping-remote-ip-1
+PASSED: vpn-strongswan-ping-remote-ip-1
+RUNNING: vpn-strongswan-ping-remote-gw
+PASSED: vpn-strongswan-ping-remote-gw
+RUNNING: vpn-strongswan-ping-remote-ip-2
+PASSED: vpn-strongswan-ping-remote-ip-2
+```
+
+
+
+
