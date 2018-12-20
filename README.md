@@ -30,13 +30,17 @@ chmod +x ~/deploy.sh && ~/deploy.sh
 ```
 ---
 ### Deploy Strongswan on IBM Cloud kubernetes Service
+
 after starting your cluster run the following command 
 download config.yaml file, and update the following
 remote.gateway with softlayer public IP
 remote.subnet with softlayer private subnet
+local.subnet append IKS worker node private subnet
 privateIPtoPing with Softlayer machine private IP
 
 ```
 helm install -f config.yaml --name=vpn ibm/strongswan
 ```
+For detailes steps and trouble shooting follow the below URL
+https://console.bluemix.net/docs/containers/cs_vpn.html#vpn
 
