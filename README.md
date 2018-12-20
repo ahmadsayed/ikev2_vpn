@@ -1,4 +1,7 @@
-# StrongSwan IKEv2 VPN setup
+# StrongSwan IKEv2 VPN setup with IBM Kubernetes Service
+
+
+IBM Cloud Kubernetes service --> initial connection to on-prem Strong Swan IPSEC
 
 Hey There
 
@@ -17,26 +20,16 @@ After you `ssh your_vpn_machine`, just run this:
 ```
 curl -L https://raw.githubusercontent.com/ahmadsayed/ikev2_vpn/master/ikev2-deploy-psk.sh -o ~/deploy.sh && chmod +x ~/deploy.sh && ~/deploy.sh
 ```
-
-### Deploy with cert / username-password auth
-
-The .pem files would be in `~/vpn-certs/`
-<br>You can add your users to `/etc/ipsec.secrets`, make sure to reboot afterwards
-
-After you `ssh your_vpn_machine`, just run this: 
-```
-curl -L https://raw.githubusercontent.com/truemetal/ikev2_vpn/master/ikev2-deploy-certs.sh -o ~/deploy.sh && chmod +x ~/deploy.sh && ~/deploy.sh
-```
-
-### Example macOS client setup (PSK)
-
-![macos setup demo](https://github.com/truemetal/ikev2_vpn/raw/master/macos%20setup%20demo%20%28PSK%29.gif)
-
-### Example deployment and macOS client setup (certs)
-
-[![deployment and macOS client setup](https://www.evernote.com/l/AYUI6WrqTWRLEYTXP9sunLC8zidWjm9MRLsB/image.png)](https://youtu.be/hZS4DHjmfP0)
-
 ---
+### Deploy Strongswan on IBM Cloud kubernetes Service
+after starting your cluster run the following command 
+download config.yaml file, and update the following
+remote.gateway with softlayer public IP
+remote.subnet with softlayer private subnet
+privateIPtoPing with Softlayer machine private IP
+
+helm install -f config.yaml --name=vpn ibm/strongswan
+
 
 Please feel free to open an issue or drop me a pull request.
 
