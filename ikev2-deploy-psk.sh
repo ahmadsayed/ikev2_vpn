@@ -30,7 +30,7 @@ apt-get -y install strongswan strongswan-plugin-eap-mschapv2 moreutils iptables-
 #===========
 
 ## Create /etc/ipsec.conf
-## change right sourceIP address to match subnet
+## @ahmadsayed, change right sourceIP address to match subnets, also update ike  & esp
 
 cat << EOF > /etc/ipsec.conf
 config setup
