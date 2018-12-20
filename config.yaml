@@ -297,7 +297,7 @@ local:
   #   user-managed subnet CIDRs
   #
   # NOTE: If 'ipsec.keyexchange=ikev1', only a single subnet can be specified.
-  subnet: 172.30.0.0/16,172.21.0.0/16
+  subnet: 172.30.0.0/16,172.21.0.0/16, <IKS worker nodes private subnet>
 
   # local.id: The string identifier for the local Kubernetes cluster side your VPN tunnel endpoint uses for the connection.
   id: ibm-cloud
