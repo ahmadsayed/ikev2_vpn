@@ -307,19 +307,19 @@ remote:
 
   # remote.gateway: The public IP address for the on-premises VPN gateway.
   # When ipsec.auto is set to 'start', this value is required.
-  gateway: "159.253.153.85"
+  gateway: <softlayer-public-IP>
 
   # remote.subnet: The list of on-premises private subnet CIDRs that the Kubernetes clusters are allowed to access.
   #
   # NOTE: If 'ipsec.keyexchange=ikev1', only a single subnet can be specified.
-  subnet:  10.68.233.0/26
+  subnet:  <private-subnet>
 
   # remote.id: The string identifier for the remote on-premises side your VPN tunnel endpoint uses for the connection.
   id: on-prem
 
   # (Optional) remote.privateIPtoPing: the private IP address in the remote subnet that will be used by the
   # Helm test validation programs for VPN ping connectivity tests.
-  privateIPtoPing: 10.68.233.6
+  privateIPtoPing: <softlayer-private-IP>
 
 preshared:
 
