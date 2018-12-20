@@ -51,7 +51,7 @@ conn ikev2-vpn
     rekey=no
     left=%any
     leftid=on-prem
-    leftsubnet=10.68.233.0/26
+    leftsubnet=<private subnet>
     leftsourceip=%config
     right=%any
     rightid=%any
@@ -100,11 +100,11 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -p udp --dport  500 -j ACCEPT
 iptables -A INPUT -p udp --dport 4500 -j ACCEPT
 
-iptables -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s 10.68.233.0/26 -j ACCEPT
-iptables -A FORWARD --match policy --pol ipsec --dir out --proto esp -d 10.68.233.0/26 -j ACCEPT
-iptables -t nat -A POSTROUTING -s 10.68.233.0/26 -o eth1 -m policy --pol ipsec --dir out -j ACCEPT
-iptables -t nat -A POSTROUTING -s 10.68.233.0/26 -o eth1 -j MASQUERADE
-iptables -t mangle -A FORWARD --match policy --pol ipsec --dir in -s 10.68.233.0/26 -o eth1 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
+iptables -A FORWARD --match policy --pol ipsec --dir in  --proto esp -s <private subnet> -j ACCEPT
+iptables -A FORWARD --match policy --pol ipsec --dir out --proto esp -d <private subnet> -j ACCEPT
+iptables -t nat -A POSTROUTING -s <private subnet> -o eth1 -m policy --pol ipsec --dir out -j ACCEPT
+iptables -t nat -A POSTROUTING -s <private subnet> -o eth1 -j MASQUERADE
+iptables -t mangle -A FORWARD --match policy --pol ipsec --dir in -s <private subnet> -o eth1 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
 
 iptables -A INPUT -j DROP
 iptables -A FORWARD -j DROP
