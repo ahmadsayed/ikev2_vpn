@@ -34,8 +34,11 @@ chmod +x ~/deploy.sh && ~/deploy.sh
 
 after starting your cluster run the following command 
 download config.yaml file, and update the following
-remote.gateway with softlayer public IP
-remote.subnet with softlayer private subnet
+
+#### remote.gateway with softlayer public IP
+
+#### remote.subnet with softlayer private subnet
+
 local.subnet append IKS worker node private subnet
 privateIPtoPing with Softlayer machine private IP
 
